@@ -1,0 +1,16 @@
+syntax = "proto3";
+package divine.nft;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "divine/x/nft/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "divine/x/nft/Params";
+  option (gogoproto.equal) = true;
+
+  
+  int32 defaultFeeAmount = 1 [(gogoproto.moretags) = "yaml:\"default_fee_amount\""];
+}

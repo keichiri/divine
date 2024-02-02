@@ -53,6 +53,9 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
+	nftmodulekeeper "divine/x/nft/keeper"
+	rewardsmodulekeeper "divine/x/rewards/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"divine/docs"
@@ -115,6 +118,8 @@ type App struct {
 	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 
+	RewardsKeeper rewardsmodulekeeper.Keeper
+	NftKeeper     nftmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -252,6 +257,8 @@ func New(
 		&app.GroupKeeper,
 		&app.ConsensusParamsKeeper,
 		&app.CircuitBreakerKeeper,
+		&app.RewardsKeeper,
+		&app.NftKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)

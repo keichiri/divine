@@ -1,0 +1,12 @@
+syntax = "proto3";
+package divine.nft;
+
+option go_package = "divine/x/nft/types";
+
+message Token {
+  string index = 1; 
+  string owner = 2; 
+  string dataDescriptor = 3; 
+  string creator = 4;
+}
+

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package divine.nft;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "divine/nft/params.proto";
+import "divine/nft/token.proto";
+
+option go_package = "divine/x/nft/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/divine/nft/params";
+  
+  }
+  
+  // Queries a list of Token items.
+  rpc Token    (QueryGetTokenRequest) returns (QueryGetTokenResponse) {
+    option (google.api.http).get = "/divine/nft/token/{index}";
+  
+  }
+  rpc TokenAll (QueryAllTokenRequest) returns (QueryAllTokenResponse) {
+    option (google.api.http).get = "/divine/nft/token";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetTokenRequest {
+  string index = 1;
+}
+
+message QueryGetTokenResponse {
+  Token token = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTokenRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTokenResponse {
+  repeated Token                                  token      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

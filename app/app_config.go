@@ -33,6 +33,12 @@ import (
 	_ "cosmossdk.io/x/feegrant/module" // import for side-effects
 	_ "cosmossdk.io/x/upgrade"         // import for side-effects
 	upgradetypes "cosmossdk.io/x/upgrade/types"
+	nftmodulev1 "divine/api/divine/nft/module"
+	rewardsmodulev1 "divine/api/divine/rewards/module"
+	_ "divine/x/nft/module" // import for side-effects
+	nftmoduletypes "divine/x/nft/types"
+	_ "divine/x/rewards/module" // import for side-effects
+	rewardsmoduletypes "divine/x/rewards/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config" // import for side-effects
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -107,6 +113,8 @@ var (
 		consensusparamtypes.ModuleName,
 		circuittypes.ModuleName,
 		// chain modules
+		rewardsmoduletypes.ModuleName,
+		nftmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -131,6 +139,8 @@ var (
 		icatypes.ModuleName,
 		ibcfeetypes.ModuleName,
 		// chain modules
+		rewardsmoduletypes.ModuleName,
+		nftmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -149,6 +159,8 @@ var (
 		icatypes.ModuleName,
 		ibcfeetypes.ModuleName,
 		// chain modules
+		rewardsmoduletypes.ModuleName,
+		nftmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -168,6 +180,8 @@ var (
 		{Account: ibctransfertypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: ibcfeetypes.ModuleName},
 		{Account: icatypes.ModuleName},
+		{Account: rewardsmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
+		{Account: nftmoduletypes.ModuleName, Permissions: []string{authtypes.Burner}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
@@ -297,6 +311,14 @@ var (
 			{
 				Name:   circuittypes.ModuleName,
 				Config: appconfig.WrapAny(&circuitmodulev1.Module{}),
+			},
+			{
+				Name:   rewardsmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&rewardsmodulev1.Module{}),
+			},
+			{
+				Name:   nftmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&nftmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
