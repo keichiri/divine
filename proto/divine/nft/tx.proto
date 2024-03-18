@@ -19,8 +19,10 @@ service Msg {
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
   rpc CreateToken  (MsgCreateToken ) returns (MsgCreateTokenResponse );
-//  rpc UpdateToken  (MsgUpdateToken ) returns (MsgUpdateTokenResponse );
-//  rpc DeleteToken  (MsgDeleteToken ) returns (MsgDeleteTokenResponse );
+  
+  //  rpc UpdateToken  (MsgUpdateToken ) returns (MsgUpdateTokenResponse );
+  //  rpc DeleteToken  (MsgDeleteToken ) returns (MsgDeleteTokenResponse );
+  rpc TransferToken (MsgTransferToken) returns (MsgTransferTokenResponse);
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -29,7 +31,7 @@ message MsgUpdateParams {
   
   // authority is the address that controls the module (defaults to x/gov unless overwritten).
   string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  
+
   // params defines the module parameters to update.
   
   // NOTE: All parameters must be supplied.
@@ -46,10 +48,11 @@ message MsgCreateToken {
   string index          = 2;
   string owner          = 3;
   string dataDescriptor = 4;
-  uint64 fee = 5;
+  uint64 fee            = 5;
 }
 
 message MsgCreateTokenResponse {}
+
 
 //message MsgUpdateToken {
 //  option (cosmos.msg.v1.signer) = "creator";
@@ -69,3 +72,13 @@ message MsgCreateTokenResponse {}
 //
 //message MsgDeleteTokenResponse {}
 //
+message MsgTransferToken {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  string index   = 2;
+  string buyer   = 3;
+  uint64 amount  = 4;
+}
+
+message MsgTransferTokenResponse {}
+

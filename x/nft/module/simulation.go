@@ -35,6 +35,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteToken int = 100
 
+	opWeightMsgTransferToken = "op_weight_msg_transfer_token"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgTransferToken int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -106,6 +110,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	//	nftsimulation.SimulateMsgDeleteToken(am.accountKeeper, am.bankKeeper, am.keeper),
 	//))
 
+	var weightMsgTransferToken int
+	simState.AppParams.GetOrGenerate(opWeightMsgTransferToken, &weightMsgTransferToken, nil,
+		func(_ *rand.Rand) {
+			weightMsgTransferToken = defaultWeightMsgTransferToken
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgTransferToken,
+		nftsimulation.SimulateMsgTransferToken(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -138,6 +153,14 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 		//		return nil
 		//	},
 		//),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgTransferToken,
+			defaultWeightMsgTransferToken,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				nftsimulation.SimulateMsgTransferToken(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
 		// this line is used by starport scaffolding # simapp/module/OpMsg
 	}
 }

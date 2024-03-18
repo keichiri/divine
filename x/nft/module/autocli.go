@@ -41,9 +41,9 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod:      "CreateToken",
-					Use:            "create-token [index] [owner] [dataDescriptor]",
+					Use:            "create-token [index] [owner] [fee] [dataDescriptor]",
 					Short:          "Create a new token",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "owner"}, {ProtoField: "dataDescriptor"}, {ProtoField: "fee"}},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "owner"}, {ProtoField: "fee"}, {ProtoField: "dataDescriptor"}},
 				},
 				//{
 				//	RpcMethod:      "UpdateToken",
@@ -57,6 +57,12 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				//	Short:          "Delete token",
 				//	PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}},
 				//},
+				{
+					RpcMethod:      "TransferToken",
+					Use:            "transfer-token [index] [buyer] [amount]",
+					Short:          "Send a transfer-token tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "buyer"}, {ProtoField: "amount"}},
+				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},
